@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MARVEL THREADS — Official MCU Apparel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Barlow:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+  <!-- PROGRESS BAR -->
+  <div id="prog"></div>
+
+  <!-- CURSOR -->
+  <div id="cur"></div>
+  <div id="curR"></div>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="ld-logo">MARVEL<em>THREADS</em></div>
+    <div class="ld-track">
+      <div class="ld-bar"></div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toasts"></div>
+
+  <!-- GLOBAL OVERLAY -->
+  <div id="overlay"></div>
+
+  <!-- ══════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="nav-brand">MARVEL<em>THREADS</em></div>
+    <div class="nav-links">
+      <a class="nav-link on" data-f="all">ALL</a>
+      <a class="nav-link" data-f="avengers">AVENGERS</a>
+      <a class="nav-link" data-f="villain">VILLAINS</a>
+      <a class="nav-link" data-f="classic">CLASSIC</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <input type="text" id="nSearch" placeholder="SEARCH…">
+        <span class="si">🔍</span>
+        <div class="search-drop" id="sDrop"></div>
+      </div>
+      <button class="ib" id="themeBtn" title="Toggle Theme">🌙</button>
+      <button class="ib" id="wishIB" title="Wishlist">
+        <span>🤍</span><span class="dot" id="wDot">0</span>
+      </button>
+      <button class="ib" id="cartIB" title="Cart">
+        <span>🛒</span><span class="dot" id="cDot">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════
+       HERO
+  ══════════════════════════════════ -->
+  <section class="hero">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-body">
+      <div class="hero-eyebrow">NEW COLLECTION 2025</div>
+      <h1 class="hero-h">SUIT UP<em>LIKE A HERO</em></h1>
+      <p class="hero-sub">Official MCU Licensed Apparel · Limited Edition Drops</p>
+      <a href="#shop" class="hero-cta">SHOP THE COLLECTION</a>
+    </div>
+    <div class="hero-scroll">SCROLL DOWN ↓</div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       STATS STRIP
+  ══════════════════════════════════ -->
+  <div class="stats">
+    <div class="stat-item"><b>30</b> EXCLUSIVE DESIGNS</div>
+    <div class="stat-div">✦</div>
+    <div class="stat-item"><b>100%</b> COTTON BLEND</div>
+    <div class="stat-div">✦</div>
+    <div class="stat-item"><b>FREE</b> SHIPPING OVER ₹999</div>
+    <div class="stat-div">✦</div>
+    <div class="stat-item"><b>MCU</b> OFFICIAL LICENSED</div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       AI SMART SEARCH
+  ══════════════════════════════════ -->
+  <div class="ai-bar">
+    <span class="ai-tag">⚡ AI SEARCH</span>
+    <input type="text" id="aiIn" placeholder='Try: "villain shirts under ₹1300"  or  "best Spider-Man tee"'>
+    <button class="ai-go" id="aiGo">ASK AI →</button>
+  </div>
+  <div id="aiMsg"></div>
+
+  <!-- ══════════════════════════════════
+       RECENTLY VIEWED
+  ══════════════════════════════════ -->
+  <div class="section" id="recentSec">
+    <div class="sec-label">RECENTLY VIEWED</div>
+    <div class="sec-h" style="font-size:2.6rem;margin-bottom:0">PICKED UP WHERE YOU LEFT</div>
+    <div class="mini-row" id="recentRow"></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SHOP
+  ══════════════════════════════════ -->
+  <div class="section" id="shop">
+    <div class="shop-head">
+      <div>
+        <div class="sec-label">THE COLLECTION</div>
+        <div class="sec-h" style="font-size:4rem">ALL DESIGNS</div>
+      </div>
+      <div class="sh-right">
+        <span class="sh-label">SORT</span>
+        <select class="sh-select" id="sortSel">
+          <option value="d">FEATURED</option>
+          <option value="pl">PRICE ↑</option>
+          <option value="ph">PRICE ↓</option>
+          <option value="r">TOP RATED</option>
+          <option value="n">NEWEST</option>
+        </select>
+      </div>
+    </div>
+    <div class="toolbar">
+      <div class="filters">
+        <button class="fb on" data-f="all">ALL</button>
+        <button class="fb" data-f="avengers">AVENGERS</button>
+        <button class="fb" data-f="villain">VILLAINS</button>
+        <button class="fb" data-f="classic">CLASSIC</button>
+      </div>
+      <div class="price-wrap">
+        <span class="sh-label">MAX PRICE</span>
+        <input type="range" id="priceR" min="500" max="2000" value="2000" step="50">
+        <span id="priceVal">₹2000</span>
+      </div>
+    </div>
+    <div class="grid" id="pgrid"></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       YOU MAY ALSO LIKE
+  ══════════════════════════════════ -->
+  <div class="section" id="suggestSec">
+    <div class="sec-label">CURATED FOR YOU</div>
+    <div class="sec-h" style="font-size:2.6rem;margin-bottom:0">YOU MAY ALSO LIKE</div>
+    <div class="mini-row" id="suggestRow"></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       REVIEWS
+  ══════════════════════════════════ -->
+  <div class="section">
+    <div class="sec-label">COMMUNITY</div>
+    <div class="sec-h" style="font-size:3.5rem;margin-bottom:0">WHAT HEROES SAY</div>
+    <div class="reviews-grid" id="rvGrid"></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       CART DRAWER
+  ══════════════════════════════════ -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="drawer-head">
+      <h3>YOUR CART</h3>
+      <button class="close-x" id="cartClose">✕</button>
+    </div>
+    <div class="drawer-tabs">
+      <button class="dtab on" data-tab="cart">CART (<span id="cartTabN">0</span>)</button>
+      <button class="dtab" data-tab="wish">WISHLIST (<span id="wishTabN">0</span>)</button>
+    </div>
+    <div class="drawer-body">
+      <div class="drawer-empty" id="cartEmpty">Your cart is empty.<br>Add some Marvel magic! ⚡</div>
+      <div id="cartItems"></div>
+      <div id="wishItems" style="display:none">
+        <div class="drawer-empty" id="wishEmpty">No saved items yet.<br>Hit ♡ to save a favourite!</div>
+        <div id="wishList"></div>
+      </div>
+    </div>
+    <div class="drawer-foot" id="drawerFoot" style="display:none">
+      <div class="promo-row">
+        <input type="text" id="promoIn" placeholder="PROMO CODE">
+        <button id="promoBtn">APPLY</button>
+      </div>
+      <div id="promoMsg"></div>
+      <div class="total-row">
+        <span class="total-lbl">TOTAL</span>
+        <span class="total-amt" id="cartTotal">₹0</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">CHECKOUT →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       PRODUCT MODAL
+  ══════════════════════════════════ -->
+  <div class="pmodal" id="pmodal">
+    <button class="pmodal-x" id="pmodalX">✕</button>
+    <div class="pm-grid" id="pmGrid"></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SIZE GUIDE MODAL
+  ══════════════════════════════════ -->
+  <div class="sgmodal" id="sgModal">
+    <button class="pmodal-x" onclick="closeSG()">✕</button>
+    <div class="sg-h">SIZE GUIDE</div>
+    <table class="sg-table">
+      <thead>
+        <tr>
+          <th>SIZE</th>
+          <th>CHEST (in)</th>
+          <th>LENGTH (in)</th>
+          <th>SHOULDER (in)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>XS</td>
+          <td>34–36</td>
+          <td>27</td>
+          <td>16</td>
+        </tr>
+        <tr>
+          <td>S</td>
+          <td>36–38</td>
+          <td>28</td>
+          <td>17</td>
+        </tr>
+        <tr>
+          <td>M</td>
+          <td>38–40</td>
+          <td>29</td>
+          <td>18</td>
+        </tr>
+        <tr>
+          <td>L</td>
+          <td>40–42</td>
+          <td>30</td>
+          <td>19</td>
+        </tr>
+        <tr>
+          <td>XL</td>
+          <td>42–44</td>
+          <td>31</td>
+          <td>20</td>
+        </tr>
+        <tr>
+          <td>XXL</td>
+          <td>44–46</td>
+          <td>32</td>
+          <td>21</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════
+       CHECKOUT MODAL
+  ══════════════════════════════════ -->
+  <div class="comodal" id="coModal">
+    <button class="pmodal-x" onclick="closeCO()">✕</button>
+    <div class="co-h">CHECKOUT</div>
+    <div class="co-steps">
+      <button class="cstep on">01 INFO</button>
+      <button class="cstep">02 ADDRESS</button>
+      <button class="cstep">03 PAYMENT</button>
+      <button class="cstep">04 REVIEW</button>
+    </div>
+
+    <!-- Step 0: Personal Info -->
+    <div class="co-panel on" id="cop0">
+      <div class="frow">
+        <div class="fg"><label class="fl">FIRST NAME</label><input class="fi" id="coFn" placeholder="Tony"></div>
+        <div class="fg"><label class="fl">LAST NAME</label><input class="fi" id="coLn" placeholder="Stark"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="fl">EMAIL</label><input class="fi" id="coEm"
+            placeholder="tony@starkindustries.com"></div>
+        <div class="fg"><label class="fl">PHONE</label><input class="fi" id="coPh" placeholder="+91 98765 43210"></div>
+      </div>
+      <button class="co-next" onclick="goStep(1)">CONTINUE →</button>
+    </div>
+
+    <!-- Step 1: Address -->
+    <div class="co-panel" id="cop1">
+      <div class="fg"><label class="fl">ADDRESS LINE 1</label><input class="fi" id="coA1"
+          placeholder="123 Avengers Tower"></div>
+      <div class="fg"><label class="fl">ADDRESS LINE 2</label><input class="fi" id="coA2"
+          placeholder="Apt / Floor (optional)"></div>
+      <div class="frow">
+        <div class="fg"><label class="fl">CITY</label><input class="fi" id="coCity" placeholder="Mumbai"></div>
+        <div class="fg"><label class="fl">PINCODE</label><input class="fi" id="coPin" placeholder="400001"></div>
+      </div>
+      <div class="fg"><label class="fl">STATE</label><input class="fi" id="coSt" placeholder="Maharashtra"></div>
+      <button class="co-next" onclick="goStep(2)">CONTINUE →</button>
+    </div>
+
+    <!-- Step 2: Payment -->
+    <div class="co-panel" id="cop2">
+      <div class="pay-opts" id="payOpts">
+        <div class="pay-opt on" onclick="selPay(this)">
+          <div class="po-radio"></div><span class="po-name">💳 CREDIT / DEBIT CARD</span>
+        </div>
+        <div class="pay-opt" onclick="selPay(this)">
+          <div class="po-radio"></div><span class="po-name">📱 UPI / GPay / PhonePe</span>
+        </div>
+        <div class="pay-opt" onclick="selPay(this)">
+          <div class="po-radio"></div><span class="po-name">🏦 NET BANKING</span>
+        </div>
+        <div class="pay-opt" onclick="selPay(this)">
+          <div class="po-radio"></div><span class="po-name">💵 CASH ON DELIVERY</span>
+        </div>
+      </div>
+      <button class="co-next" onclick="goStep(3)">REVIEW ORDER →</button>
+    </div>
+
+    <!-- Step 3: Confirm -->
+    <div class="co-panel" id="cop3">
+      <div id="osList"></div>
+      <div class="os-total">ORDER TOTAL: <span id="osTotal">₹0</span></div>
+      <button class="co-next" onclick="placeOrder()">⚡ PLACE ORDER</button>
+    </div>
+
+    <!-- Step 4: Success -->
+    <div class="co-panel" id="cop4">
+      <div class="success-box">
+        <div class="suc-icon">🎉</div>
+        <div class="suc-title">ORDER CONFIRMED!</div>
+        <div class="suc-sub">YOUR MARVEL GEAR IS ON ITS WAY</div>
+        <div class="suc-id" id="sucId">#MCU-000000</div>
+        <p class="suc-note">Estimated delivery in <span>3–5 business days</span></p>
+        <button class="co-next" onclick="closeCO()" style="margin-top:22px">CONTINUE SHOPPING →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       AI HERO QUIZ MODAL
+  ══════════════════════════════════ -->
+  <div class="qzmodal" id="qzModal">
+    <button class="pmodal-x" onclick="closeQZ()">✕</button>
+    <div class="qz-title">FIND YOUR HERO</div>
+    <p class="qz-sub">3 QUICK QUESTIONS · AI PICKS YOUR PERFECT SHIRT</p>
+    <div id="qzBody"></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       FLOATING ACTION BUTTONS
+  ══════════════════════════════════ -->
+  <div class="fab-group">
+    <button class="fab-item fab-quiz" id="fabQuiz" onclick="openQZ()">⚡ HERO QUIZ</button>
+    <button class="fab-item fab-top" id="fabTop" onclick="scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+    <button class="fab-main" id="fabMain" onclick="toggleFab()">＋</button>
+  </div>
+
+  <!-- ══════════════════════════════════
+       FOOTER
+  ══════════════════════════════════ -->
+  <footer>
+    <div class="ft-logo">MARVEL<em>THREADS</em></div>
+    <p class="ft-text">© 2025 Marvel Threads. Marvel characters and the distinctive likenesses thereof are trademarks of
+      Marvel Entertainment, LLC.</p>
+    <div class="ft-links">
+      <a href="#" onclick="openSG();return false">Size Guide</a>
+      <a href="#">Returns</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+</body>
+
+</html>
